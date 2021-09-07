@@ -29,13 +29,6 @@
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
   @yield('page-css')
-
-
-  <script type='text/javascript'>
-    /* <![CDATA[ */
-    var page_data = {!! pageJsonData() !!};
-    /* ]]> */
-  </script>
 </head>
 
 <body>

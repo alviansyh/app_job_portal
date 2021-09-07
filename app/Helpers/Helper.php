@@ -12,37 +12,6 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 /**
  * @return string
  */
-if ( ! function_exists('pageJsonData')){
-    function pageJsonData(){
-
-
-        $jobModalOpen = false;
-        if (session('job_validation_fails')){
-            $jobModalOpen = true;
-        }
-
-        $data = [
-            'home_url'      => route('home'),
-            'asset_url'     => asset('assets'),
-            'csrf_token'    => csrf_token(),
-            'jobModalOpen'  => $jobModalOpen,
-            'flag_job_validation_fails' => session('flag_job_validation_fails'),
-            'share_job_validation_fails' => session('share_job_validation_fails'),
-            //'my_dashboard' => route('my_dashboard'),
-        ];
-
-        $routeLists = \Illuminate\Support\Facades\Route::getRoutes();
-
-        $routes = [];
-        foreach ($routeLists as $route){
-            $routes[$route->getName()] = $data['home_url'].'/'.$route->uri;
-        }
-        $data['routes'] = $routes;
-
-        return json_encode($data);
-    }
-}
-
 function generate_id(string $table, string $field = 'id', int $length = 10, $prefix, $reset = false){
     $result = IdGenerator::generate(['table' => $table, 'field' => $field, 'length' => $length, 'prefix' => $prefix, 'reset_on_prefix_change' => $reset]);
 
@@ -180,24 +149,6 @@ function get_stripe_key($type = 'publishable'){
     return $stripe_key;
 }
 
-/**
- * @param int $ad_id
- * @param string $status
- */
-function ad_status_change($ad_id = 0, $status = 1){
-    if ($ad_id > 0){
-        $ad = \App\Models\Ad::find($ad_id);
-        
-        if ($ad){
-            $previous_status = $ad->status;
-            //Publish ad
-            $ad->status = $status;
-            $ad->save();
-        }
-    }
-
-    return false;
-}
 function update_option($key, $value){
     $option = \App\Models\Option::firstOrCreate(['option_key' => $key]);
     $option -> option_value = $value;
@@ -212,9 +163,6 @@ function e_form_error($field = '', $errors){
 function e_form_invalid_class($field = '', $errors){
     return $errors->has($field) ? ' is-invalid' : '';
 }
-
-
-
 
 /**
  * @param int $amount
