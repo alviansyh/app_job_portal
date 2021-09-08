@@ -2,17 +2,22 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobAdsController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\JobApplicationController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ValidationController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\UserAdditionalInfoController;
+use App\Http\Controllers\UserEducationController;
+use App\Http\Controllers\UserExperienceController;
+use App\Http\Controllers\UserLanguageController;
+use App\Http\Controllers\UserSkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +63,29 @@ Route::group(['prefix' => 'account'], function () {
 
         Route::get('profile-settings', [AccountController::class, 'editProfile'])->name('profile_settings');
         Route::post('profile-settings', [AccountController::class, 'editProfilePost']);
+
+        Route::group(['prefix' => 'profile-settings'], function () {
+            Route::get('/', [AccountController::class, 'editProfile'])->name('profile_settings');
+            Route::post('/', [AccountController::class, 'editProfilePost']);
+
+            Route::group(['middleware' => 'only_user'], function () {
+                Route::get('experiences', [UserExperienceController::class, 'edit'])->name('profile_experience');
+                Route::post('experiences', [UserExperienceController::class, 'update']);
+
+                Route::get('educations', [UserEducationController::class, 'edit'])->name('profile_education');
+                Route::post('educations', [UserEducationController::class, 'update']);
+
+                Route::get('skills', [UserSkillController::class, 'edit'])->name('profile_skill');
+                Route::post('skills', [UserSkillController::class, 'update']);
+                
+                Route::get('languages', [UserLanguageController::class, 'edit'])->name('profile_language');
+                Route::post('languages', [UserLanguageController::class, 'update']);
+
+                Route::get('additional-infos', [UserAdditionalInfoController::class, 'edit'])->name('profile_addtional');
+                Route::post('additional-infos', [UserAdditionalInfoController::class, 'update']);
+            });
+        });
+
         Route::post('file/upload-image', [FileController::class, 'uploadImage'])->name('upload_image');
 
         Route::get('change-password', [AccountController::class, 'changePassword'])->name('change_password');

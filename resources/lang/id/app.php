@@ -80,6 +80,12 @@ return [
     'delete'                            => 'Hapus',
     'details'                           => 'Rincian',
     'company_overview'                  => 'Tentang Perusahaan',
+    'profile'                           => 'Profil',
+    'user_experience'                   => 'Pengalaman',
+    'user_education'                    => 'Pendidikan',
+    'user_skill'                        => 'Kemampuan',
+    'user_language'                     => 'Bahasa',
+    'user_additional_info'              => 'Info Lain',
     
 
     /*
