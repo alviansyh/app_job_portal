@@ -188,7 +188,9 @@ class AccountController extends Controller
             return back()->with('success', __('app.updated'));
         } elseif ($user->is_user()) {
             $rules = [
-                'address' => 'required',
+                'name' => 'required',
+                'gender' => 'required',
+                'date_birthday' => 'required',
                 'country' => 'required',
                 'area' => 'required',
             ];
@@ -198,6 +200,26 @@ class AccountController extends Controller
             $data_user = [
                 'name' => $request->name,
             ];
+
+            $data_user_info = [
+                'gender' => $request->gender,
+                'date_birthday' => $request->date_birthday, 
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'address_2' => $request->address_2,
+                'postal_code' => $request->postal_code,
+                'country_id' => $request->country,
+                'area_id' => $request->area,
+                'city' => $request->city,
+                'about_me' => $request->about_me,
+            ];
+
+            $user->update($data_user);
+            UserInfo::where('user_id', $user->user_info->user_id)->update($data_user_info);
+
+            \LogActivity::store(trans('app.profile_settings'));
+
+            return back()->with('success', __('app.updated'));
         }
     }
 

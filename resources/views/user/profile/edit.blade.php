@@ -233,7 +233,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>@lang('app.user_name') </label>
+                <label>@lang('app.user_name')  <span class="text-danger">*</span></label>
                 <input type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" value="{{ old('name', $user->name) }}">
                 @if ($errors->has('user_name'))
                   <div class="invalid-feedback">
@@ -245,7 +245,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>{{ __('app.gender') }}</label>
+                <label>{{ __('app.gender') }} <span class="text-danger">*</span></label>
                 <select class="form-control select {{ $errors->has('gender') ? ' is-invalid' : '' }}" id="gender" name="gender">
                   <option value="">&nbsp;</option>
                   @foreach (gender() as $gender_id => $gender)
@@ -270,7 +270,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>{{ __('app.date_birthday') }}</label>
+                <label>{{ __('app.date_birthday') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control {{ $errors->has('date_birthday') ? ' is-date_birthday' : '' }}" id="date_birthday" name="date_birthday"
                   value="{{ old('date_birthday', $date_birthday) }}">
                 @if ($errors->has('date_birthday'))
@@ -283,7 +283,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label>@lang('app.address') <span class="text-danger">*</span></label>
+                <label>@lang('app.address')</label>
                 <input type="text" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address" name="address" value="{{ old('address', $user_info->address) }}">
                 @if ($errors->has('address'))
                   <div class="invalid-feedback">

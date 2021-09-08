@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyInfo;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -37,6 +38,26 @@ class FileController extends Controller
 
                 return ['success' => true, 'msg' => trans('app.updated_logo')];
             } elseif ($user->is_user()) {
+                $user_info = $user->user_info;
+                $image = $request->file('file_upload');
+
+                $resized_image = Image::make($image)->resize(null, 256, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->stream();
+
+                $user_photo = $user_info->id . '.' . $image->getClientOriginalExtension();
+                $user_photo_path = 'uploads/photos/photo_profile/' . $user_photo;
+
+                Storage::disk('public')->put($user_photo_path, $resized_image->__toString());
+                $data['photo'] = $user_photo;
+                $data['last_updated_photo'] = now();
+
+                UserInfo::where('user_id', $user_info->user_id)->update($data);
+                Session::flash('success', __('app.updated_photo'));
+
+                \LogActivity::store(trans('app.updated_photo'));
+
+                return ['success' => true, 'msg' => trans('app.updated_photo')];
             }
         }
     }
