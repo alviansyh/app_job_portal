@@ -13,6 +13,7 @@ class CreateCompanyInfosTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('company_infos', function (Blueprint $table) {
             $table->integer('id')->primary();
             $table->foreignId('user_id')->constrained('users');

@@ -13,7 +13,6 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::enableForeignKeyConstraints();
         Schema::create('users', function (Blueprint $table) {
             $table->integer('id')->primary();
             $table->string('name')->nullable();
