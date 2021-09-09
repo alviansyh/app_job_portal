@@ -15,6 +15,7 @@ class CreateUserFilesTable extends Migration
     {
         Schema::create('user_files', function (Blueprint $table) {
             $table->integer('id')->primary();
+            $table->unsignedBigInteger('user_id');
             $table->foreignId('user_id')->constrained('users');
             $table->string('code')->nullable();
             $table->string('filename')->nullable();
