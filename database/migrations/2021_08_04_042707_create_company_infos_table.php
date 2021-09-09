@@ -15,7 +15,6 @@ class CreateCompanyInfosTable extends Migration
     {
         Schema::create('company_infos', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->unsignedBigInteger('user_id');
             $table->foreignId('user_id')->constrained('users');
             $table->string('logo')->nullable();
             $table->string('company', 95)->nullable();
