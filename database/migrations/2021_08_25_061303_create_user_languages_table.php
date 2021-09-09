@@ -15,9 +15,11 @@ class CreateUserLanguagesTable extends Migration
     {
         Schema::create('user_languages', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('user_info_id')->constrained('user_infos');
+            $table->integer('user_info_id')->unsigned();
             $table->text('language');
             $table->timestamps();
+
+            $table->foreign('user_info_id')->references('id')->on('user_infos');
         });
     }
 

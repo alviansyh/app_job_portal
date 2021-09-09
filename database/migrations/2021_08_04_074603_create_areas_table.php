@@ -16,7 +16,9 @@ class CreateAreasTable extends Migration
         Schema::create('areas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('area_name', 150)->nullable();
-            $table->foreignId('country_id')->nullable()->constrained();
+            $table->integer('country_id')->unsigned();
+            
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

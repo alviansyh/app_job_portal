@@ -15,11 +15,11 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('company_id')->constrained('company_infos');
+            $table->integer('company_id')->unsigned();
             $table->string('job_title')->nullable();
             $table->string('job_slug')->unique();
             $table->string('position')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained();
+            $table->integer('category_id')->unsigned();
             $table->integer('salary')->default(0)->nullable(); //Salary from
             $table->integer('salary_upto')->default(0)->nullable(); //Salary to (Up range)
             $table->tinyInteger('is_negotiable')->default(0)->nullable();
@@ -37,8 +37,8 @@ class CreateJobsTable extends Migration
             $table->text('benefits')->nullable();
             $table->text('notes')->nullable();
 
-            $table->foreignId('country_id')->nullable()->constrained();
-            $table->foreignId('area_id')->nullable()->constrained();
+            $table->integer('country_id')->unsigned();
+            $table->integer('area_id')->unsigned();
             $table->string('city_name')->nullable();
 
             $table->tinyInteger('experience_required_years')->default(0)->nullable(); //In Years
@@ -50,6 +50,11 @@ class CreateJobsTable extends Migration
             $table->string('job_id', 20)->nullable();
             $table->tinyInteger('is_premium')->nullable();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('company_infos');
+            $table->foreign('category_id')->references('id')->on('job_categories');
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('area_id')->references('id')->on('areas');
         });
     }
 

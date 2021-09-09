@@ -13,14 +13,13 @@ class CreateUserInfosTable extends Migration
      */
     public function up()
     {
-        Schema::enableForeignKeyConstraints();
         Schema::create('user_infos', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->foreignId('user_id')->constrained('users');
+            $table->integer('user_id')->unsigned();
             $table->string('photo')->nullable();
             $table->timestamp('last_updated_photo')->nullable();
-            $table->foreignId('country_id')->nullable()->constrained();
-            $table->foreignId('area_id')->nullable()->constrained();
+            $table->integer('country_id')->unsigned();
+            $table->integer('area_id')->unsigned();
             $table->string('city')->nullable();
             $table->enum('gender', ['male', 'female', 'not_specified']);
             $table->date('date_birthday')->nullable();
@@ -31,6 +30,10 @@ class CreateUserInfosTable extends Migration
             $table->string('identity_number', 16)->nullable();
             $table->text('about_me')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('area_id')->references('id')->on('areas');
         });
     }
 

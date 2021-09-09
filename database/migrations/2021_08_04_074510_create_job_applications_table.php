@@ -15,11 +15,14 @@ class CreateJobApplicationsTable extends Migration
     {
         Schema::create('job_applications', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('job_id')->nullable()->constrained();
-            $table->foreignId('user_id')->constrained('user_infos');
+            $table->integer('job_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->longText('cover_letter')->nullable();
             $table->tinyInteger('is_shortlisted')->nullable();
             $table->timestamps();
+
+            $table->foreign('job_id')->references('id')->on('jobs');
+            $table->foreign('user_id')->references('id')->on('user_infos');
         });
     }
 

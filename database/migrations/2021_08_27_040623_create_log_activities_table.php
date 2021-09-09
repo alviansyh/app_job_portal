@@ -20,8 +20,10 @@ class CreateLogActivitiesTable extends Migration
             $table->string('method');
             $table->string('ip_address');
             $table->string('agent');
-            $table->foreignId('user_id')->constrained('users');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

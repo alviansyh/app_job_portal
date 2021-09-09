@@ -13,16 +13,15 @@ class CreateCompanyInfosTable extends Migration
      */
     public function up()
     {
-        Schema::enableForeignKeyConstraints();
         Schema::create('company_infos', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->foreignId('user_id')->constrained('users');
+            $table->integer('user_id')->unsigned();
             $table->string('logo')->nullable();
             $table->string('company', 95)->nullable();
             $table->string('company_slug')->unique();
             $table->string('company_size', 5)->nullable();
-            $table->foreignId('country_id')->nullable()->constrained();
-            $table->foreignId('area_id')->nullable()->constrained();
+            $table->integer('country_id')->unsigned();
+            $table->integer('area_id')->unsigned();
             $table->string('address')->nullable();
             $table->string('address_2')->nullable();
             $table->string('city')->nullable();
@@ -35,6 +34,10 @@ class CreateCompanyInfosTable extends Migration
             $table->tinyInteger('status_validation')->default(0);
             $table->integer('premium_jobs_balance')->default(0)->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('area_id')->references('id')->on('areas');
         });
     }
 
