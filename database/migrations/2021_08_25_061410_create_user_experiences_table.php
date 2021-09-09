@@ -15,7 +15,7 @@ class CreateUserExperiencesTable extends Migration
     {
         Schema::create('user_experiences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_info_id')->unsigned();
+            $table->foreignId('user_info_id')->constrained('user_infos');
             $table->string('position')->nullable();
             $table->string('company', 95)->nullable();
             $table->string('salary_currency', 10)->nullable();
@@ -24,8 +24,6 @@ class CreateUserExperiencesTable extends Migration
             $table->dateTime('end_date')->nullable();
             $table->mediumText('description')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_info_id')->references('id')->on('user_infos');
         });
     }
 

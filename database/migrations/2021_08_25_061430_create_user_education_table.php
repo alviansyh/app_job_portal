@@ -15,7 +15,7 @@ class CreateUserEducationTable extends Migration
     {
         Schema::create('user_education', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_info_id')->unsigned();
+            $table->foreignId('user_info_id')->constrained('user_infos');
             $table->string('institute', 95)->nullable();
             $table->string('title')->nullable();
             $table->string('major')->nullable();
@@ -24,8 +24,6 @@ class CreateUserEducationTable extends Migration
             $table->mediumText('activity')->nullable();
             $table->mediumText('description')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_info_id')->references('id')->on('user_infos');
         });
     }
 

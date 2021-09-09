@@ -15,14 +15,12 @@ class CreateUserFilesTable extends Migration
     {
         Schema::create('user_files', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->integer('user_id')->unsigned();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('code')->nullable();
             $table->string('filename')->nullable();
             $table->string('filename_origin')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
