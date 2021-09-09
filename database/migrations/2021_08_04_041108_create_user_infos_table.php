@@ -15,7 +15,7 @@ class CreateUserInfosTable extends Migration
     {
         Schema::create('user_infos', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->string('photo')->nullable();
             $table->timestamp('last_updated_photo')->nullable();
             $table->integer('country_id')->unsigned();
