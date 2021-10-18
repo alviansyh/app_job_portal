@@ -15,7 +15,7 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('company_id')->constrained('company_infos');
             $table->string('job_title')->nullable();
             $table->string('job_slug')->unique();
             $table->string('position')->nullable();
